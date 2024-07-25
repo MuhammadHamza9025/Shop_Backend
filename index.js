@@ -19,7 +19,7 @@ const cloudinary = require('cloudinary').v2;
 
 console.log(process.env.ORIGIN)
 app.use(cors({
-    origin: process.env.ORIGIN,
+    origin: "http://localhost:3000",
     credentials: true
 })); app.use(cookieParser())
 app.use(express.json())
