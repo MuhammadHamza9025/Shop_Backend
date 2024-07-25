@@ -115,7 +115,7 @@ const addproduct = (req, res) => {
         description: req.body.description,
         oldprice: req.body.oldprice,
         newprice: req.body.newprice,
-        image: image_url
+        image: imageUrls
     }).then(() => res.json({ message: 'Product Added !', status: 202, success: true })).catch((err) => res.json(err))
 
 }
