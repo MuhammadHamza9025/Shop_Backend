@@ -49,14 +49,15 @@ const updateuser = async (req, res) => {
     console.log(userupdate.role)
 }
 const getallusers = async (req, res) => {
-    const allusers = await User.find({})
+    const a = req.getuserid
+    const allusers = await User.find({ _id: a })
 
     allusers.map(e => e.password = undefined)
     allusers.map(e => e.Profile = undefined)
-    const filteredusers = allusers.filter(e => e._id != req.getuserid)
+    const filteredusers = allusers.find(e => e._id != a)
 
     // console.log(req.getuserid)
-    res.json(filteredusers)
+    res.json(allusers)
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
