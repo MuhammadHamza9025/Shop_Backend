@@ -17,11 +17,25 @@ const stripe = require('stripe')(stripekey)
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
 const cloudinary = require('cloudinary').v2;
 
-console.log(process.env.ORIGIN)
+const allowedOrigins = [
+    'http://localhost:3000', // Development URL
+    'https://shop-frontend-flame-chi.vercel.app' // Production URL
+];
+
 app.use(cors({
-    origin: process.env.ORIGIN || "http://localhost:3000",
+    origin: function (origin, callback) {
+        // allow requests with no origin - like mobile apps or curl requests
+        if (!origin) return callback(null, true);
+        if (allowedOrigins.indexOf(origin) === -1) {
+            const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+            return callback(new Error(msg), false);
+        }
+        return callback(null, true);
+    },
     credentials: true
-})); app.use(cookieParser())
+}));
+
+app.use(cookieParser())
 app.use(express.json())
 
 app.use('/images', express.static('upload/images'));
