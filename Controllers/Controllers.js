@@ -17,11 +17,11 @@ const login = async (req, res) => {
         if (compare_pass) {
             const token = jwt.sign({ id: finduser._id }, key)
             res.cookie('Hamza', token, {
-                httpOnly: true, // Ensures the cookie is not accessible via client-side JavaScript
-                secure: process.env.NODE_ENV === 'production', // Ensures the cookie is only sent over HTTPS in production
-                sameSite: 'Lax', // Controls when cookies are sent
-                maxAge: 3 * 60 * 60 * 1000 // 3 hours in milliseconds
-            });
+                expiresIn: '3h',
+                httpOnly: false,
+                secure: true,
+                sameSite: 'Lax'
+            })
             res.json({ success: true, message: 'Login Successfull', token, user: finduser.UserName, key })
         }
         else
@@ -36,7 +36,7 @@ const logoutfunction = async (req, res) => {
     const getcookie = req.cookies; // Use req.cookies to get cookies parsed by cookie-parser
     console.log('hiiii');
 
-    // res.clearCookie('Hamza'); // Clear the specific cookie
+    res.clearCookie('Hamza'); // Clear the specific cookie
 
     res.json({ message: 'Logout successful' }); // Respond with a success message
 }
