@@ -94,16 +94,20 @@ const userverification = (req, res, next) => {
 
     const cookieString = req.headers.cookie;
     const token = getCookieValue(cookieString, 'Hamza');
+    console.log("the token is ", token)
 
 
     if (!token) {
         res.json({ status: 400, message: 'Token Missing' })
     }
     else
-        jwt.verify(token, process.env.JWT_KEY, (err, decode) => {
-            req.getuserid = decode.id
-            next()
-        })
+        console.log('HIIIi')
+    jwt.verify(token, process.env.JWT_KEY, (err, decode) => {
+        req.getuserid = decode.id
+        console.log(decode.id)
+        next()
+
+    })
 
 }
 app.post('/login', login)

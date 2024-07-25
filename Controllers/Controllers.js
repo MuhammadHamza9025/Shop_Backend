@@ -1,10 +1,11 @@
-
+require('dotenv').config()
 const User = require('../Models/User_Models')
 const bcrypt = require("bcrypt")
 const cookie = require('cookie-parser')
 const jwt = require('jsonwebtoken')
 const Product = require('../Models/Products_Model')
 const port = 1000;
+const key = process.env.JWT_KEY
 
 const login = async (req, res) => {
     const { email, password } = req.body;
@@ -14,13 +15,13 @@ const login = async (req, res) => {
     if (finduser) {
         const compare_pass = await bcrypt.compare(password, finduser.password)
         if (compare_pass) {
-            const token = jwt.sign({ id: finduser._id }, 'thisisisisismy')
+            const token = jwt.sign({ id: finduser._id }, key)
             res.cookie('Hamza', token, {
                 expiresIn: '3h',
                 httpOnly: false,
                 secure: true, sameSite: 'Lax'
             })
-            res.json({ success: true, message: 'Login Successfull', token, user: finduser.UserName })
+            res.json({ success: true, message: 'Login Successfull', token, user: finduser.UserName, key })
         }
         else
             res.json({ success: false, message: 'Passwrd Wrong !' })
