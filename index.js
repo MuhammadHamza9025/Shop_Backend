@@ -17,8 +17,9 @@ const stripe = require('stripe')(stripekey)
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
 const cloudinary = require('cloudinary').v2;
 
+console.log(process.env.ORIGIN)
 app.use(cors({
-    origin: process.env.ORIGIN || 'http://localhost:3000',
+    origin: process.env.ORIGIN,
     credentials: true
 })); app.use(cookieParser())
 app.use(express.json())
@@ -99,7 +100,7 @@ const userverification = (req, res, next) => {
         res.json({ status: 400, message: 'Token Missing' })
     }
     else
-        jwt.verify(token, 'thisisisisismy', (err, decode) => {
+        jwt.verify(token, process.env.JWT_KEY, (err, decode) => {
             req.getuserid = decode.id
             next()
         })
