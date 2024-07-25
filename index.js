@@ -107,22 +107,25 @@ const userverification = (req, res, next) => {
     }
 
     const cookieString = req.headers.cookie;
-    const token = getCookieValue(cookieString, 'Hamza');
-    console.log("the token is ", token)
+    console.log('Cookie String:', cookieString); // Debugging: Log the entire cookie string
 
+    const token = getCookieValue(cookieString, 'Hamza');
+    console.log("The token is:", token); // Debugging: Log the token value
 
     if (!token) {
-        res.json({ status: 400, message: 'Token Missing' })
+        return res.status(400).json({ status: 400, message: 'Token Missing' });
     }
-    else
-        console.log('HIIIi')
+
     jwt.verify(token, process.env.JWT_KEY, (err, decode) => {
-        req.getuserid = decode.id
-        console.log(decode.id)
-        next()
+        if (err) {
+            console.error('JWT Verification Error:', err); // Log JWT verification error
+            return res.status(401).json({ status: 401, message: 'Unauthorized' });
+        }
 
-    })
-
+        req.getuserid = decode.id;
+        console.log('Decoded User ID:', decode.id); // Debugging: Log the decoded user ID
+        next();
+    });
 }
 app.post('/login', login)
 app.get('/user', userverification, getuser)
