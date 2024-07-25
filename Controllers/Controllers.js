@@ -32,14 +32,14 @@ const login = async (req, res) => {
 
 }
 //////////////////////////////////////////////
-// const logoutfunction = async (req, res) => {
-//     const getcookie = req.cookies; // Use req.cookies to get cookies parsed by cookie-parser
-//     console.log('hiiii');
+const logoutfunction = async (req, res) => {
+    // const getcookie = req.cookies; // Use req.cookies to get cookies parsed by cookie-parser
+    // console.log('hiiii');
 
-//     res.clearCookie('Hamza'); // Clear the specific cookie
+    // res.clearCookie('Hamza'); // Clear the specific cookie
 
-//     res.json({ message: 'Logout successful' }); // Respond with a success message
-// }
+    // res.json({ message: 'Logout successful' }); // Respond with a success message
+}
 
 /////////////////////////////////////////////////////////////////////////
 const updateuser = async (req, res) => {
