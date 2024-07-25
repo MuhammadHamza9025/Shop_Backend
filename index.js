@@ -18,7 +18,7 @@ const { CloudinaryStorage } = require('multer-storage-cloudinary');
 const cloudinary = require('cloudinary').v2;
 
 app.use(cors({
-    origin: 'http://localhost:3000',
+    origin: process.env.ORIGIN || 'http://localhost:3000',
     credentials: true
 })); app.use(cookieParser())
 app.use(express.json())
@@ -174,8 +174,8 @@ app.post('/stripe-payment', async (req, res) => {
                 quantity: 1,
             })),
             mode: 'payment',
-            success_url: 'http://localhost:3000/paymentsuccess',
-            cancel_url: 'http://localhost:3000/page',
+            success_url: `${process.env.ORIGIN}paymentsuccess`,
+            cancel_url: `${process.env.ORIGIN}page`,
         });
 
         // Respond with session ID
