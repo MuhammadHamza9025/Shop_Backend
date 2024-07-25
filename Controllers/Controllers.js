@@ -17,10 +17,11 @@ const login = async (req, res) => {
         if (compare_pass) {
             const token = jwt.sign({ id: finduser._id }, key)
             res.cookie('Hamza', token, {
-                expiresIn: '3h',
-                httpOnly: false,
+                httpOnly: true,
                 secure: true,
-                sameSite: 'Lax'
+                sameSite: 'Lax',
+                maxAge: 3 * 60 * 60 * 1000, // 3 hours
+                path: '/'
             })
             res.json({ success: true, message: 'Login Successfull', token, user: finduser.UserName, key })
         }
