@@ -50,14 +50,15 @@ const updateuser = async (req, res) => {
 }
 const getallusers = async (req, res) => {
     const a = req.getuserid
-    const allusers = await User.find({ _id: a })
+    const allusers = await User.find({})
 
     allusers.map(e => e.password = undefined)
     allusers.map(e => e.Profile = undefined)
-    const filteredusers = allusers.find(e => e._id != a)
+    const filteredusers = allusers.filter(e => e._id != a)
 
     // console.log(req.getuserid)
-    res.json(allusers)
+    res.json(filteredusers)
+    console.log(filteredusers.length)
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
