@@ -173,6 +173,7 @@ app.post('/updateItems', uploadfile.array('image'), async (req, res) => {
 
 })
 app.post('/stripe-payment', async (req, res) => {
+
     try {
         // Validate request body
         if (!Array.isArray(req.body) || !req.body.every(e => e.title && e.newprice)) {
@@ -202,6 +203,7 @@ app.post('/stripe-payment', async (req, res) => {
 
         // Respond with session ID
         res.json({ id: session.id });
+        console.log(session.id)
 
     } catch (error) {
         console.error('Error creating Stripe session:', error);
